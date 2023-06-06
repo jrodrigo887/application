@@ -7,9 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.estudy.application.entities.Category;
 import com.estudy.application.entities.Order;
 import com.estudy.application.entities.User;
 import com.estudy.application.entities.enums.OrderStatus;
+import com.estudy.application.repositories.CategoryRepository;
 import com.estudy.application.repositories.OrderRepository;
 import com.estudy.application.repositories.UserRepository;
 
@@ -21,6 +23,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public void insertUserData() {
         User us1 = new User(null, "Joao", "joao@email.com", "8578545854", "123456");
         User us2 = new User(null, "Filipe", "filipe@email.com", "8578545548", "9874256");
@@ -30,8 +35,14 @@ public class TestConfig implements CommandLineRunner {
         Order ord3 = new Order(null, Instant.parse("2023-05-01T20:16:13Z"), OrderStatus.PAID, us1);
         Order ord4 = new Order(null, Instant.parse("2023-05-01T18:16:13Z"), OrderStatus.SHIPPED, us2);
         Order ord5 = new Order(null, Instant.parse("2023-05-01T19:16:13Z"), OrderStatus.CANCELED, us2);
+        
+        Category ct1 = new Category(null, "Balbuino da silva");
+        Category ct2 = new Category(null, "Joaquitam da silva");
+        Category ct3 = new Category(null, "Pereira da silva");
+        
         userRepository.saveAll(Arrays.asList(us1, us2));
         orderRepository.saveAll(Arrays.asList(ord1, ord2, ord3, ord4, ord5));
+        categoryRepository.saveAll(Arrays.asList(ct1, ct2, ct3));
     }
 
     @Override

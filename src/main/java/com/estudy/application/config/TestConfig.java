@@ -53,9 +53,17 @@ public class TestConfig implements CommandLineRunner {
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+        categoryRepository.saveAll(Arrays.asList(ct1, ct2, ct3));
+
+        p1.getCategories().add(ct1);
+        p2.getCategories().add(ct2);
+        p3.getCategories().add(ct3);
+        p4.getCategories().add(ct1);
+        p5.getCategories().add(ct2);
+
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
         userRepository.saveAll(Arrays.asList(us1, us2));
         orderRepository.saveAll(Arrays.asList(ord1, ord2, ord3, ord4, ord5));
-        categoryRepository.saveAll(Arrays.asList(ct1, ct2, ct3));
     }
 
     @Override

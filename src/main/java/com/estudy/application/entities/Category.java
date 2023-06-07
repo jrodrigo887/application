@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -26,8 +28,9 @@ public class Category implements Serializable {
 
     @EqualsAndHashCode.Exclude private String name;
     
-    @Transient
-    Set<Product> categories = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    Set<Product> products = new HashSet<>();
 
     public Category() { }
 

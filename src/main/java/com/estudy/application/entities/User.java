@@ -30,20 +30,11 @@ public class User extends UserAnnotation {
         this.password = password;
     }
 
-    public User(List<Order> ordens, Long id, String name, String email, String phone, String password) {
-        super();
-        this.ordens = ordens;
-        super.id = id;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-    }
 
    
     @JsonIgnore
     @OneToMany(mappedBy = "client")
-    private java.util.List<Order>  ordens = new ArrayList<>();
+    private List<Order>  ordens = new ArrayList<>();
 
    
 }

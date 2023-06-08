@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @MappedSuperclass
 public abstract class UserAnnotation implements Serializable {
     protected static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;

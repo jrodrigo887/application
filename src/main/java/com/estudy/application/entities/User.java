@@ -30,7 +30,9 @@ public class User extends UserAnnotation {
         this.password = password;
     }
 
-
+    public Long getId() {
+        return this.id;
+    }
    
     @JsonIgnore
     @OneToMany(mappedBy = "client")

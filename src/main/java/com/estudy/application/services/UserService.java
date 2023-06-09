@@ -26,4 +26,12 @@ public class UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    /**
+     * @param id
+     */
+    public void delete(Long id) {
+        // Optional<User> user = userRepository.findById(id);
+        userRepository.deleteById(id);
+    }
 }

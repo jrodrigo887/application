@@ -1,4 +1,5 @@
 package com.estudy.application.entities;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -25,28 +26,30 @@ import lombok.Getter;
 @Table(name = "tb_order")
 public class Order implements Serializable {
     protected static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    @EqualsAndHashCode.Exclude private Instant instant;
+
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+    // "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @EqualsAndHashCode.Exclude
+    private Instant instant;
 
     private Integer orderStatus;
 
-    
     @ManyToOne
     @JoinColumn(name = "client_id")
     public User client;
-    
+
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
-    public Order() {}
+    public Order() {
+    }
 
     public Order(Long id, Instant instant, OrderStatus orderStatus, User client) {
         this.id = id;
@@ -67,5 +70,13 @@ public class Order implements Serializable {
 
     public void setPayment(Payment pay) {
         this.payment = pay;
+    }
+
+    public Double getTotal() {
+        Double sum = 0.0;
+        for (OrderItem oi : items) {
+            sum += oi.getSubTotal();
+        }
+        return sum;
     }
 }

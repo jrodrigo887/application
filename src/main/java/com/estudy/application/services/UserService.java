@@ -13,6 +13,8 @@ import com.estudy.application.repositories.UserRepository;
 import com.estudy.application.services.exceptions.DatabaseException;
 import com.estudy.application.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
     
@@ -33,13 +35,17 @@ public class UserService {
     }
 
     public User update(Long id, User user) {
-        User entitUser = userRepository.getReferenceById(id);
-        return userRepository.save(updateData(entitUser, user));
+        try {
+            User entitUser = userRepository.getReferenceById(id);
+            return userRepository.save(updateData(entitUser, user));
+        } catch (EntityNotFoundException e) {
+           throw new ResourceNotFoundException(id);
+        }
     }
 
     private User updateData(User entiUser, User obj) {
-        BeanUtils.copyProperties(obj, entiUser);
-        return entiUser;
+            BeanUtils.copyProperties(obj, entiUser);
+            return entiUser;
     }
 
     /**

@@ -1,0 +1,33 @@
+version: "3"
+services:
+  postgres:
+    container_name: app-apring
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+      POSTGRES_SHARED_BUFFERS: 512MB
+      POSTGRES_EFFECTIVE_CACHE_SIZE: 1GB
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
+    deploy:
+      resources:
+        limits:
+          memory: 2G  
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+    external: false
